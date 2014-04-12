@@ -10,7 +10,9 @@
     "history",
     "https://raw.githubusercontent.com/*",
     "http://www.avgthreatlabs.com/website-safety-reports/domain/*",
-    "https://safeweb.norton.com/report/show/*"
+    "https://safeweb.norton.com/report/show/*",
+    "http://api.mywot.com/0.4/public_link_json2*",
+    "https://sb-ssl.google.com/safebrowsing/api/lookup*"
   ],
   "browser_action": {
     "default_icon": "images/logo.png",

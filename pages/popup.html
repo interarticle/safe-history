@@ -23,8 +23,9 @@
 			<div ng-repeat="item in history">
 				{{ item.url }}
 
-				<div style="background-color: yellow" ng-if="item.wotRating">
-					{{ item.wotRating }}
+				<div style="background-color: yellow">
+					<span ng-if="item.wotRating">WOT: {{ item.wotRating }}</span>
+					<span ng-if="item.googleRating">Google: {{ item.googleRating }}</span>
 				</div>
 			</div>
 		</div>

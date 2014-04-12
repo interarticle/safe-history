@@ -24,11 +24,14 @@ function heartBleed () {
 	var currentUrl;
 	var heartBleedURL;
 
-	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
-		heartBleedURL = data.split('\n');
-		// console.log(data);
-		// parse(heartBleedURL);
-	})	
+	var ctor;
+	
+	this.ctor = new Promise(function(resolve) {
+		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
+			heartBleedURL = data.split('\n');
+		})	
+		resolve();
+	});
 
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
 	    currentUrl = tabs[0].url;
@@ -36,7 +39,6 @@ function heartBleed () {
 
 	this.parse = function () {
 		var urls = heartBleedURL;
-		// var currentUrl = tabs[0].url;
 
 		console.log(urls[0]);
 		var currentDomain = new URI(currentUrl).hostname();
@@ -45,18 +47,23 @@ function heartBleed () {
 		for ( var i = 0; i < urls.length; i++ )
 			if (currentDomain.indexOf(urls[i]) != -1)
 				console.log("This website was vulnerable, you might wanna change your password!");
-
 	}
 
 	this.isHeartBleed = function (visitTime, historyURL) {
-		var historyDomain = new URI(historyURL).hostname();
-		if (visitTime < new Date(2014, 3, 8)) {
-			console.log("historyURL: " + historyDomain);
-			for( var i = 0; i < heartBleedURL.length; i++) { 
-				if(historyDomain.indexOf(heartBleedURL[i]) != -1)
-					console.log("heartbleed!");
+		return new Promise(function(resolve) {
+			var historyDomain = new URI(historyURL).hostname();
+			if (visitTime < new Date(2014, 3, 8)) {
+				console.log("historyURL: " + historyDomain);
+				for( var i = 0; i < heartBleedURL.length; i++) { 
+					if(historyDomain.indexOf(heartBleedURL[i]) != -1) {
+						console.log("heartbleed!");
+						resolve(0);
+						return;
+					}
+				}
 			}
-		}
+			resolve(-1);
+		})
 	}
 
 	this.main = function () {
@@ -103,6 +110,17 @@ function safeHistoryMain($scope) {
 						$.each(hostnames[sites[index]], function(key, value) {
 							value.wotRating = result.wot_rate;
 						})
+					});
+				});
+			});
+
+			getGoogleSafeBrowsingRate(sites).then(function(results) {
+				$scope.$apply(function() {
+					$.each(results, function(index, result) {
+						$.each(hostnames[sites[index]], function(key, value) {
+							value.googleRating = result.google_rate;
+							console.log(result);
+						});
 					});
 				});
 			});
@@ -180,16 +198,26 @@ function getGoogleSafeBrowsingRate(url_list) {
             url: "https://sb-ssl.google.com/safebrowsing/api/lookup?client=firefox&apikey=ABQIAAAAnz8NMTU8sfDxwFqx36NDsRQ3PTNICuN5Fwsgomuke8FxMfY_PA&appver=1.5.2&pver=3.0",
             data: params
         }).done( function (data) {
-            data = data.trim().split("\n")
-
-            result = [];
-            for (var i = 0; i < data.length; i++) {
-                entry = {};
-                entry["site"] = url_list[i];
-                entry["google_rate"] = data[i];
-                result.push(entry);
+            if (data) {
+                data = $.trim(data).split("\n")
+                var result = [];
+                for (var i = 0; i < data.length; i++) {
+                    var entry = {};
+                    entry["site"] = url_list[i];
+                    entry["google_rate"] = data[i];
+                    result.push(entry);
+                }
+            } else {
+                var result = [];
+                for (var i = 0; i < url_list.length; i++) {
+                    var entry = {
+                        "site": url_list[i],
+                        "google_rate": "ok"
+                    }
+                    result.push(entry);
+                }
             }
-            resolve(result);
+          resolve(result);
         });
     })
 }
