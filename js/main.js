@@ -336,6 +336,8 @@ function thumbnailHandler() {
 	};
 
 	this.getThumbnail = function(url) {
+		var uri = new URI(url)
+		url = sprintf("%s://%s/", uri.protocol(), uri.hostname());
 		// Potential internal web thumbnail integration with caching on github, and proper error handling
 		// Only error handling for now.
 		return new Promise(function(resolve, reject) {
