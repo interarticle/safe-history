@@ -3,9 +3,9 @@
 <head>
 <title>Safe History</title>
 <meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
-<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 <script type="text/javascript" src="js/jquery-1.11.0.min.js" ></script>
 <script type="text/javascript" src="js/sprintf.min.js" ></script>
 <script type="text/javascript" src="js/cufon-yui.js"></script>
@@ -27,8 +27,26 @@
 <![endif]-->
 <style>
   #myRoundabout li {
-    background-color: #eee;
+    background-color: #333;
     border:10px solid white;
+  }
+  #myRoundabout li .title-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  #myRoundabout li .title-mask .url {
+    font-size: 2em;
+    line-height: 1.2em;
+  }
+  #myRoundabout li .title-mask .page-title {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1.2em;
   }
 </style>
 </head>
@@ -45,7 +63,11 @@
             <div id="gallery">
               <ul id="myRoundabout">
                 <li ng-repeat="site in sites">
-                  <img src="{{ site.thumbnail ? site.thumbnail : 'images/loading.gif' }}" alt="">
+                  <img ng-src="{{ site.thumbnail ? site.thumbnail : 'images/loading.gif' }}" alt="">
+                  <div class="title-mask">
+                    <div class="url">{{ site.url }}</div>
+                    <div class="page-title">{{ site.title }}</div>
+                  </div>
                 </li>
               </ul>
             </div>
