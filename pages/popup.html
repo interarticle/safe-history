@@ -22,6 +22,10 @@
 		<div id="data">
 			<div ng-repeat="item in history">
 				{{ item.url }}
+
+				<div style="background-color: yellow" ng-if="item.wotRating">
+					{{ item.wotRating }}
+				</div>
 			</div>
 		</div>
 		<button id="actionbtn" ng-click="action()">Hi</button>
