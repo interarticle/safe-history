@@ -231,5 +231,5 @@ function getSiteChekk3 (url){
                 resolve(o.find("#sitecheck-results table.scan-findings.table").html());
             }
         );
-    }
+    });
 }
