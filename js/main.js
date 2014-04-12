@@ -89,10 +89,11 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
-		inst.getHistory(1000).then(function(data) {
+		inst.getHistory(10).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
 
+            // console.log(data);
 			$.each(data, function(key, value) {
 				var uri = new URI(value.url);
 				var hostname = uri.hostname().toLowerCase();
@@ -129,17 +130,28 @@ function safeHistoryMain($scope) {
 					$.each(results, function(index, result) {
 						$.each(hostnames[sites[index]], function(key, value) {
 							value.googleRating = result.google_rate;
-							console.log(result);
+							// console.log(result);
 						});
 					});
 				});
 			});
 
-			$scope.$apply(function() {
-				$.each($scope.history, function(index, value) {
-					value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
-				})
-			});
+            getAnalyseTable(sites).then(function(results) {
+             $scope.$apply(function() {
+                 $.each(results, function(index, result) {
+                     $.each(hostnames[sites[index]], function(key, value) {
+                         value.idx = index;
+                         // value.analyseTable = result.table_html;
+                     })
+                 });
+             });
+            });
+
+			// $scope.$apply(function() {
+			// 	$.each($scope.history, function(index, value) {
+			// 		value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
+			// 	})
+			// });
 		});
 		
 	};
@@ -247,4 +259,33 @@ function getSiteChekk3 (url){
             }
         );
     });
+}
+
+
+function getAnalyseTable(url_list) {
+    return new Promise(function(resolve) {
+
+
+
+        var result = [];
+        for (var i = 0; i < url_list.length; i++) {
+            (function (i) {
+                getSiteChekk3(url_list[i]).then(function(data) {
+                    var table_name = "analyze-table-" + i;
+                    console.log(table_name);
+                    if (data) {
+                        document.getElementById(table_name).innerHTML = "<table>" + data + "</table>";
+                    } else {
+                        document.getElementById(table_name).innerHTML = "Analysis not available";
+                    }
+                })
+                var entry = {
+                    "site": url_list[i]
+                    // "table_html": table_html
+                }
+                result.push(entry);
+            })(i);
+        }
+        resolve(result);
+    })
 }
