@@ -1,4 +1,4 @@
-
+"use strict";
 Cufon.now();
 $(document).ready(function () {
     $('#myRoundabout').roundabout({
@@ -22,6 +22,11 @@ function loadData() {
             // Filter data to eliminate duplicate hostnames
             var hostnames = {};
 
+
+            $.each(data, function(index, value) {
+                value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
+            });
+
             // console.log(data);
             $.each(data, function(key, value) {
                 var uri = new URI(value.url);
@@ -38,14 +43,27 @@ function loadData() {
 
             var sites = Object.keys(hostnames);
 
-            getWOTRate(sites).then(function(results) {
-                
+            Promise.all([
+                getWOTRate(sites).then(function(results) {
+                    $.each(results, function(index, result) {
+                        $.each(hostnames[sites[index]], function(key, value) {
+                            value.wotRating = result.wot_rate;
+                        })
+                    });
+                }),
+                getGoogleSafeBrowsingRate(sites).then(function(results) {
+                    $.each(results, function(index, result) {
+                        $.each(hostnames[sites[index]], function(key, value) {
+                            value.googleRating = result.google_rate;
+                            // console.log(result);
+                        });
+                    });
+                })
+            ]).then(function() {
+                console.log(hostnames);
             });
 
-            getGoogleSafeBrowsingRate(sites).then(function(results) {
-                
-            });
-
+            // console.log(hostnames);
         });
     });
 }
