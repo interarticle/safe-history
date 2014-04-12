@@ -29,8 +29,8 @@ function heartBleed () {
 	this.ctor = new Promise(function(resolve) {
 		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
 			heartBleedURL = data.split('\n');
-		})	
-		resolve();
+			resolve();
+		});
 	});
 
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
@@ -288,4 +288,14 @@ function getAnalyseTable(url_list) {
         }
         resolve(result);
     })
+}
+
+function thumbnailHandler() {
+	var webthumbnailTimeout = 10000;
+	var webthumbnailPoolFrequency = 1000;
+	this.ctor = Promise.cast(); // For now, just use empty promise because no special handling is needed.
+	this.getThumbnail = function (url) {
+		// Using local cache and webthumbnail.org
+		// Local cache takes lookup table at 
+	}	
 }
