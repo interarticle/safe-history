@@ -10,6 +10,7 @@
         <h1 class="cover-heading" ng-if="wrong > 2">You got {{ wrong }} out of 10 wrong.</h1>
         <h1 class="cover-heading" ng-if="wrong <= 2">You got {{ 10 - wrong }} out of 10 correct.</h1>
         <h1 class="cover-heading" ng-if="wrong == 0">You got all of them correct. Congratulations!</h1>
+        <h2>Be ware that these are actually your browsing history...</h2>
       </div>
 
       <div class="row" ng-repeat="site in sites">
@@ -19,8 +20,19 @@
           </a>
         </div>
         <div class="col-md-8">  
-          <h2>It's <span ng-if="site.verdict != site.choice">actually</span> <span ng-if="site.verdict == 'good'">safe. </span> <span ng-if="site.verdict == 'bad'">unsafe.</span></h2>
-          <h4 style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{site.url}}</h4>
+          <h2>
+            It's <span ng-if="site.verdict != site.choice">actually</span> <span ng-if="site.verdict == 'good'">safe. </span> <span ng-if="site.verdict == 'bad'">unsafe.</span>
+            <span ng-if="site.verdict == 'bad'">
+              <span ng-if="site.heartBleed">
+                <span>The website recently was vulnerable to the Heartbleed OpenSSL bug, so your credentials may have been exposed.</span>
+              </span>
+              <span ng-if="!site.heartBleed">
+                <span ng-if="site.googleRating != 'ok'">This website is known to have {{ site.googleRating }}.</span>
+                <span ng-if="site.googleRating=='ok'">This website has an average rating of {{ site.wotRating  }} on Web of Trust.</span>
+              </span>
+            </span>
+          </h2>
+          <h4 style="max-width: 400px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{site.url}}</h4>
           <div ng-bind-html="site.table_html"></div>
         </div>
       </div>
@@ -32,10 +44,10 @@
       <br>
       <br>
 
-      <h1>Due to heart bleed attack, you might want to change your password on those sites that you have visited.</h1>
+      <h1>Due to Heartbleed attack, you might want to change your password on these sites that you have visited.</h1>
       <br>
       <br>
-      <ol>
+      <ol style="text-align: left;">
         <li ng-repeat="site in data.heartBleed" ng-if="site.url">
           <h3>
             <a href="{{site.url}}" style="display: block; max-width: 500px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{site.url}}</a>
