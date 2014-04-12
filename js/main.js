@@ -300,7 +300,7 @@ function getAnalyseTable_game(url_list) {
                     // var table_name = "analyze-table-" + i;
                     // console.log(table_name);
                     if (data) {
-                        entry["table_html"] = "<table>" + data + "</table>";
+                        entry["table_html"] = "<table class=\"table scan-findings\">" + data + "</table>";
                         // document.getElementById(table_name).innerHTML = "<table>" + data + "</table>";
                     } else {
                         entry["table_html"] = "Analysis not available";
