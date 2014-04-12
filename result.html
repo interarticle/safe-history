@@ -33,7 +33,51 @@
               <img data-src="holder.js/400%x180" alt="...">
             </a>
             </div>
-            <div class="col-md-8">Learn to spot the telltale signs of a secure site. At minimum, it should have a URL that starts with https://, and it should have a padlock icon in the browser frame – NOT on the site's page. These show the site is protected with Secure Sockets Layer (SSL), a cryptographic protocol that provides communication security.</div>
+            <div class="col-md-8">
+              <table>
+                  <thead>
+  <tr>
+      <th>Scan</th>
+      <th>Result</th>
+      <th>Severity</th>
+      <th>Recommendation</th>
+  </tr>
+    </thead>
+    <tbody>
+
+  <tr>
+      <td class="scan-red">Website Blacklisting</td>
+      <td>Detected</td>
+      <td>Critical</td>
+      <td><span class="cleanup">Clean Up</span> Clean Up &amp; Remove Blacklisting</td>
+  </tr>
+
+  <tr>
+      <td class="scan-red">Site Likely Compromised</td>
+      <td>Detected</td>
+      <td>Critical</td>
+      <td><span class="cleanup">Clean Up</span> Clean Up &amp; Remove Blacklisting</td>
+  </tr>
+
+  
+<tr>
+<td class="scan-yellow">Website Firewall</td>
+    <td>None Found</td>
+    <td>Medium Risk</td>
+    <td><span class="protect">Protect</span> Protect With Sucuri Firewall</td>
+</tr>
+
+
+
+<tr>
+    <td class="scan-yellow">Comprehensive Scan</td>
+    <td>Incomplete</td>
+    <td>Medium Risk</td>
+    <td><span class="protect">Protect</span> Scan Server Side With Sucuri</td>
+</tr>
+     </tbody>
+   </table>
+ </div>
           </div>
 
           <div class="row">
