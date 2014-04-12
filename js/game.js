@@ -81,6 +81,11 @@ angular.module("game").config(function($compileProvider, $routeProvider) {
     });
 })
 .controller("resultController", function($scope) {
+    if (!globalData && localStorage.getItem("last-data")) {
+        globalData = localStorage.getItem("last-data");
+    } else if (globalData) {
+        localStorage.setItem("last-data", globalData);
+    }
     $scope.data = globalData;
     if (globalData) {
         $scope.sites = globalData.result;   
