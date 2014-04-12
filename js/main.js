@@ -89,7 +89,7 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
-		inst.getHistory(100).then(function(data) {
+		inst.getHistory(10).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
 
@@ -296,13 +296,6 @@ function thumbnailHandler() {
 	var webthumbnailImage = "http://api.webthumbnail.org/?width=250&height=212&screen=1024&url=%s&%d";
 	var webthumbnailPoll = "http://api.webthumbnail.org?width=250&height=212&screen=1024&url=%s&action=get-status&time=%d";
 	this.ctor = Promise.cast(); // For now, just use empty promise because no special handling is needed.
-<<<<<<< HEAD
-	this.getThumbnail = function (url) {
-		// Using local cache and webthumbnail.org
-		// Local cache takes lookup table at 
-	}	
-}
-=======
 	var getWebThumbnail = this.getWebThumbnail = function (url) {
 		// Using webthumbnail.org
 		return new Promise(function(resolve, reject) {
@@ -353,4 +346,3 @@ function thumbnailHandler() {
 		});
 	}
 }
->>>>>>> b3cda3219db435bbf200c1feeeb5ec19a88e1ccf
