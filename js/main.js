@@ -24,9 +24,14 @@ function heartBleed () {
 	var currentUrl;
 	var heartBleedURL;
 
-	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
-		heartBleedURL = data.split('\n');
-	})	
+	var ctor;
+	
+	this.ctor = new Promise(function(resolve) {
+		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
+			heartBleedURL = data.split('\n');
+		})	
+		resolve();
+	});
 
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
 	    currentUrl = tabs[0].url;
@@ -42,12 +47,10 @@ function heartBleed () {
 		for ( var i = 0; i < urls.length; i++ )
 			if (currentDomain.indexOf(urls[i]) != -1)
 				console.log("This website was vulnerable, you might wanna change your password!");
-
 	}
 
 	this.isHeartBleed = function (visitTime, historyURL) {
 		return new Promise(function(resolve) {
-			var result;
 			var historyDomain = new URI(historyURL).hostname();
 			if (visitTime < new Date(2014, 3, 8)) {
 				console.log("historyURL: " + historyDomain);
