@@ -68,7 +68,7 @@ function heartBleed () {
 function avg(url) {
 	return new Promise(function(resolve, reject) {
 		$.get("http://www.avgthreatlabs.com/website-safety-reports/domain/" + url, function(data) {
-			re = {
+			var re = {
 				Rating : data.match(/<span itemprop="average" id="percentage">(\d+%)<\/span>/)[1],
 				Type : data.match(/<h2 class="green">(.+)<\/h2>/)[1]
 				};
@@ -81,7 +81,7 @@ function norton(addr) {
 	return new Promise(function(resolve, reject) {
 		$.get("https://safeweb.norton.com/report/show",{url:addr, ulang:"eng"},
 		function(data) {
-			re = {Computer : data.match(/Computer Threats: (\d+)/)[1],
+			var re = {Computer : data.match(/Computer Threats: (\d+)/)[1],
 				  Identity : data.match(/Identity Threats: (\d+)/)[1],
 				  Annoyance : data.match(/Annoyance factors: (\d+)/)[1],
 				  Rating : data.match(/<div class="community-text">[\s]+<label>(\d+\.\d+)/)[1]};
