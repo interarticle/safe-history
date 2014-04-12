@@ -327,6 +327,7 @@ a.aToolTipCloseBtn {
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #ded17c;
+	margin-left: -150px;
 }
 .banner:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
@@ -363,15 +364,16 @@ a.aToolTipCloseBtn {
 	display:inline-block;
 	color:#c92200;
 	font-family:Comic Sans MS;
-	font-size:15px;
+	font-size:23px;
 	font-weight:bold;
 	font-style:normal;
 	height:65px;
 	line-height:65px;
-	width:131px;
+	width:331px;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #ded17c;
+	margin-left: 250px;
 }
 .title:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f2ab1e), color-stop(1, #f0c911) );
