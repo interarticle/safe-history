@@ -29,8 +29,8 @@ function heartBleed () {
 	this.ctor = new Promise(function(resolve) {
 		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
 			heartBleedURL = data.split('\n');
-		})	
-		resolve();
+			resolve();
+		});
 	});
 
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
