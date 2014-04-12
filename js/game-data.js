@@ -49,7 +49,7 @@ function loadData() {
                     var bad = [];
                     var result = [];
                     $.each(hostnames, function(index, value) {
-                        if ((value.wotRating =="Not available" || value.wotRating >= 50) 
+                        if ((value.wotRating =="Not available" || value.wotRating >= 40) 
                             && value.googleRating == "ok"
                             && value.heartBleed == false) {
                             value.verdict= "good";
