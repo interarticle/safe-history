@@ -24,7 +24,8 @@ function heartBleed () {
 	var currentUrl;
 	var heartBleedURL;
 
-	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/heartbleed.txt", function(heartBleedURL) {
+	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
+		heartBleedURL = data.split('\n');
 		// console.log(data);
 		// parse(heartBleedURL);
 	})	
@@ -33,35 +34,37 @@ function heartBleed () {
 	    currentUrl = tabs[0].url;
 	});
 
-	var parse = function (data) {
-		var urls = data.split('\n');
+	this.parse = function () {
+		var urls = heartBleedURL;
 		// var currentUrl = tabs[0].url;
 
 		console.log(urls[0]);
-		var currentDomain = currentUrl.split('/')[2];
+		var currentDomain = new URI(currentUrl).hostname();
 		console.log(currentDomain);
 
 		for ( var i = 0; i < urls.length; i++ )
 			if (currentDomain.indexOf(urls[i]) != -1)
-				console.log("This website was vulnerable, you might wanna change your password!")
+				console.log("This website was vulnerable, you might wanna change your password!");
 
 	}
 
-	// var isHeartBleed = function (visitTime, historyURL) {
-	// 	if (visitTime < new Date(2014, 3, 8)) {
-	// 		var historyDomain = historyURL.split('/')[2];
-	// 		for( var i = 0; i < urls.length; i++) {
-	// 			if(historyDomain.indexOf())
-	// 		}
-	// 	}
-	// }
+	this.isHeartBleed = function (visitTime, historyURL) {
+		var historyDomain = new URI(historyURL).hostname();
+		if (visitTime < new Date(2014, 3, 8)) {
+			console.log("historyURL: " + historyDomain);
+			for( var i = 0; i < heartBleedURL.length; i++) { 
+				if(historyDomain.indexOf(heartBleedURL[i]) != -1)
+					console.log("heartbleed!");
+			}
+		}
+	}
 
 	this.main = function () {
-		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
-			// console.log(data);
-			parse(data);
-			isHeartBleed(data);
-		})
+		// $.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
+		// 	// console.log(data);
+		// 	parse(data);
+		// 	isHeartBleed(data);
+		// })
 	}
 }
 
@@ -77,7 +80,8 @@ function safeHistoryMain($scope) {
 				$scope.history = data;
 			});
 		});
-		heartB.main();
+		heartB.parse();
+		heartB.isHeartBleed(new Date(2014, 2, 8), "https://www.yahoo.com/");
 	};
 }
 
