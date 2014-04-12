@@ -18,10 +18,31 @@
             <img ng-src="{{ site.thumbnail }}" alt="...">
           </a>
         </div>
-        <div class="col-md-8">         
+        <div class="col-md-8">  
+          <h2>It's <span ng-if="site.verdict != site.choice">actually</span> <span ng-if="site.verdict == 'good'">safe. </span> <span ng-if="site.verdict == 'bad'">unsafe.</span></h2>
+          <h4 style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{site.url}}</h4>
           <div ng-bind-html="site.table_html"></div>
         </div>
       </div>
+
+      <br>
+      <br>
+
+      <br>
+      <br>
+      <br>
+
+      <h1>Due to heart bleed attack, you might want to change your password on those sites that you have visited.</h1>
+      <br>
+      <br>
+      <ol>
+        <li ng-repeat="site in data.heartBleed" ng-if="site.url">
+          <h3>
+            <a href="{{site.url}}" style="display: block; max-width: 500px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{site.url}}</a>
+
+          </h3>
+        </li>
+      </ol>
 
     </div>
 
