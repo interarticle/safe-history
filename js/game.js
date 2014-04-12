@@ -11,6 +11,9 @@ $(document).ready(function () {
         duration: 800,
         reflect: true
     });
+    $('.button1').click(function() {
+        $('#myRoundabout').roundabout_animateToNextChild();
+    });
 });
 
 function loadData() {
