@@ -289,3 +289,13 @@ function getAnalyseTable(url_list) {
         resolve(result);
     })
 }
+
+function thumbnailHandler() {
+	var webthumbnailTimeout = 10000;
+	var webthumbnailPoolFrequency = 1000;
+	this.ctor = Promise.cast(); // For now, just use empty promise because no special handling is needed.
+	this.getThumbnail = function (url) {
+		// Using local cache and webthumbnail.org
+		// Local cache takes lookup table at 
+	}	
+}
