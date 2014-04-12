@@ -6,7 +6,7 @@
   "version": "0.1",
 
   "permissions": [
-    "tabs"
+    "tabs",
     "history",
     "https://raw.githubusercontent.com/*"
   ],
