@@ -1,4 +1,3 @@
 chrome.browserAction.onClicked.addListener(function(activeTab){
-  var newURL = "chrome-extension://nholglpomhkenpcodbbkdeehnbdhcfgm/index.html";
-  chrome.tabs.create({ url: newURL });
+    chrome.tabs.create({ url: chrome.extension.getURL("index.html") });
 });

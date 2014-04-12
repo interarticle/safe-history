@@ -5,12 +5,7 @@
   "description": "History!",
   "version": "0.0.0.1",
   "icons": { "128": "images/logo.png" },
-  // "app": {
-  //   "launch": {
-  //      "local_path": "index.html"
-  //     }
-  // },
-  // 
+
   "background":{
     "scripts": ["js/background.js"]
   },
@@ -27,8 +22,7 @@
     "http://sitecheck3.sucuri.net/*"
   ],
   "browser_action": {
-    "default_icon": "images/logo.png",
-    "default_popup": "pages/popup.html"
+    "default_icon": "images/logo.png"
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

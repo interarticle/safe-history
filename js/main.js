@@ -51,7 +51,7 @@ function heartBleed () {
 
 	this.isHeartBleed = function (visitTime, historyURL) {
 		var historyDomain = new URI(historyURL).hostname();
-		if (visitTime < new Date(2014, 3, 8)) {
+		// if (visitTime < new Date(2014, 3, 8)) {
 			console.log("historyURL: " + historyDomain);
 			for( var i = 0; i < heartBleedURL.length; i++) { 
 				if(historyDomain.indexOf(heartBleedURL[i]) != -1) {
@@ -59,7 +59,7 @@ function heartBleed () {
 					return true;
 				}
 			}
-		}
+		// }
 		return false;
 	}
 
@@ -89,7 +89,7 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
-        chrome.tabs.create({ url: "http://stackoverflow.com/" });
+        // chrome.tabs.create({ url: "http://stackoverflow.com/" });
 		inst.getHistory(10).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
