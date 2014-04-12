@@ -89,7 +89,7 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
-		inst.getHistory(10).then(function(data) {
+		inst.getHistory(100).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
 
@@ -292,10 +292,65 @@ function getAnalyseTable(url_list) {
 
 function thumbnailHandler() {
 	var webthumbnailTimeout = 10000;
-	var webthumbnailPoolFrequency = 1000;
+	var webthumbnailPollFrequency = 1000;
+	var webthumbnailImage = "http://api.webthumbnail.org/?width=250&height=212&screen=1024&url=%s&%d";
+	var webthumbnailPoll = "http://api.webthumbnail.org?width=250&height=212&screen=1024&url=%s&action=get-status&time=%d";
 	this.ctor = Promise.cast(); // For now, just use empty promise because no special handling is needed.
+<<<<<<< HEAD
 	this.getThumbnail = function (url) {
 		// Using local cache and webthumbnail.org
 		// Local cache takes lookup table at 
 	}	
 }
+=======
+	var getWebThumbnail = this.getWebThumbnail = function (url) {
+		// Using webthumbnail.org
+		return new Promise(function(resolve, reject) {
+			// Force load image
+			var img = new Image();
+			img.src = sprintf(webthumbnailImage, url, new Date().getTime());
+
+			var rejected = false;
+			// Wait until load ready or timeout
+			var timeoutId = setTimeout(function() {
+				if (rejected) return;
+				rejected = true;
+				reject("Load timed out.");
+			}, webthumbnailTimeout);
+
+			var poll = function() {
+				if (rejected) return;
+				$.get(sprintf(webthumbnailPoll, url, new Date().getTime()), "json", function(result) {
+					if (rejected) return;
+					if (result == "waiting" || result == "pending" || result == "loaded") {
+						// Continue polling
+						setTimeout(poll, webthumbnailPollFrequency);
+					} else if (result == "finished") {
+						clearTimeout(timeoutId);
+						resolve(sprintf(webthumbnailImage, url, new Date().getTime()));
+					} else {
+						rejected = true;
+						reject("thumbnailing failed");
+					}
+				}).fail(function() {
+					rejected = true;
+					reject("polling error");
+				})
+			};
+
+			poll();
+		});
+	};
+
+	this.getThumbnail = function(url) {
+		// Potential internal web thumbnail integration with caching on github, and proper error handling
+		// Only error handling for now.
+		return new Promise(function(resolve, reject) {
+			getWebThumbnail(url).then(resolve)
+			.catch(function() {
+				resolve("images/question-mark.jpg");
+			});
+		});
+	}
+}
+>>>>>>> b3cda3219db435bbf200c1feeeb5ec19a88e1ccf
