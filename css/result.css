@@ -156,7 +156,7 @@ body {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 900px;
+    width: 1200px;
   }
 }
 
@@ -164,3 +164,19 @@ div.row {
   margin-top: 50px;
   text-align: left;
 }
+
+.table>tbody>tr>td.scan-green {padding-left: 30px; background:  url(../images/good.png) center left no-repeat;}
+.table>tbody>tr>td.scan-yellow {padding-left: 30px; background:  url(../images/bad.png) center left no-repeat;}
+.table>tbody>tr>td.scan-red {padding-left: 30px; background:  url(../images/bad.png) center left no-repeat;}
+.table>tbody>tr>td.scan-blue {padding-left: 30px; background:  url(../images/bad.png) center left no-repeat;}
+
+.scan-findings td span.improve{ background: #6ba226; padding: 2px 4px; margin-right: 5px; color: #fff; font-size: 11px; text-transform: uppercase;}
+.scan-findings td span.protect{ background: #f1ab32; padding: 2px 4px; margin-right: 5px; color: #fff; font-size: 11px; text-transform: uppercase;}
+.scan-findings td span.cleanup{ background: #cc0000; padding: 2px 4px; margin-right: 5px; color: #fff; font-size: 11px; text-transform: uppercase;}
+
+.scan-findings {margin-bottom: 40px;}
+.scan-findings.infected {margin-bottom: 20px;}
+
+span.improve{ background: #6ba226; padding: 2px 4px; margin-right: 5px; color: #fff; font-size: 11px; text-transform: uppercase;}
+span.protect{ background: #f1ab32; padding: 2px 4px; margin-right: 5px; color: #fff; font-size: 11px; text-transform: uppercase;}
+span.cleanup{ background: #cc0000; padding: 2px 4px; margin-right: 5px; color: #fff; font-size: 11px; text-transform: uppercase;}

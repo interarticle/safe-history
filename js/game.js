@@ -14,6 +14,12 @@ $(document).ready(function () {
     $('.button1').click(function() {
         $('#myRoundabout').roundabout_animateToNextChild();
     });
+    $('.button2').click(function() {
+        $('#myRoundabout').roundabout_animateToNextChild();
+    });
+    $('.button3').click(function() {
+        $('#myRoundabout').roundabout_animateToNextChild();
+    });    
 });
 
 function loadData() {
