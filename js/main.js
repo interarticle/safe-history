@@ -89,7 +89,7 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
-		inst.getHistory().then(function(data) {
+		inst.getHistory(1000).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
 
@@ -246,4 +246,4 @@ function getSiteChekk3 (url){
             }
         );
     }
-}
+} 
