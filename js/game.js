@@ -21,12 +21,6 @@ function loadData() {
         inst.getHistory(1000).then(function(data) {
             // Filter data to eliminate duplicate hostnames
             var hostnames = {};
-
-
-            $.each(data, function(index, value) {
-                value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
-            });
-
             // console.log(data);
             $.each(data, function(key, value) {
                 var uri = new URI(value.url);
@@ -35,32 +29,75 @@ function loadData() {
                     return; // Ignore any urls that are not http or https, can't deal with that really.
                 }
 
-                if (!hostnames[hostname]) hostnames[hostname] = [];
                 value.printableDate = new Date(value.lastVisitTime).toString();
-                hostnames[hostname].push(value);
+                hostnames[hostname] = (value);
             });
             // console.log(hostnames);
 
             var sites = Object.keys(hostnames);
 
+
+            $.each(hostnames, function(index, value) {
+                value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
+            });
+
             Promise.all([
                 getWOTRate(sites).then(function(results) {
                     $.each(results, function(index, result) {
-                        $.each(hostnames[sites[index]], function(key, value) {
-                            value.wotRating = result.wot_rate;
-                        })
+                        var value = hostnames[sites[index]];
+                        value.wotRating = result.wot_rate;
                     });
                 }),
                 getGoogleSafeBrowsingRate(sites).then(function(results) {
                     $.each(results, function(index, result) {
-                        $.each(hostnames[sites[index]], function(key, value) {
-                            value.googleRating = result.google_rate;
-                            // console.log(result);
-                        });
+                        var value = hostnames[sites[index]];
+                        value.googleRating = result.google_rate;
                     });
                 })
             ]).then(function() {
-                console.log(hostnames);
+                var good = [];
+                var bad = [];
+                var result = [];
+                $.each(hostnames, function(index, value) {
+                    if ((value.wotRating =="Not available" || value.wotRating >= 50) 
+                        && value.googleRating == "ok"
+                        && value.heartBleed == false) {
+                        value.verdict= "good";
+                        good.push(value);
+                    } else {
+                        value.verdict = "bad";
+                        bad.push(value);
+                    }
+                });
+                // console.log(good);
+                // console.log(bad);
+                for (var i = 0 ; i < 5 ; i++) {
+                    if (bad.length <= 0) {
+                        break;
+                    }
+                    var idx=Math.floor(Math.random()*bad.length);
+                    var tmp = bad.splice(idx, 1)[0];
+                    if (tmp.heartBleed == true) {
+                        var badDup = bad;
+                        bad = [];
+                        $.each(badDup, function(index, value) {
+                            if (!value.heartBleed) {
+                                bad.push(value);
+                            }
+                        });
+                    }
+                    result.push(tmp);
+                }
+
+                while(result.length < 10) {
+                    if (good.length <= 0) {
+                        break;
+                    }
+                    var idx=Math.floor(Math.random()*good.length);
+                    result.push(good.splice(idx, 1)[0]);
+                }
+                for(var j, x, i = result.length; i; j = Math.floor(Math.random() * i), x = result[--i], result[i] = result[j], result[j] = x);
+                console.log(result);
             });
 
             // console.log(hostnames);
