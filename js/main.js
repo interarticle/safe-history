@@ -24,11 +24,14 @@ function heartBleed () {
 	var currentUrl;
 	var heartBleedURL;
 
-	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
-		heartBleedURL = data.split('\n');
-		// console.log(data);
-		// parse(heartBleedURL);
-	})	
+	var ctor;
+	
+	this.ctor = new Promise(function(resolve) {
+		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
+			heartBleedURL = data.split('\n');
+		})	
+		resolve();
+	});
 
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
 	    currentUrl = tabs[0].url;
@@ -36,7 +39,6 @@ function heartBleed () {
 
 	this.parse = function () {
 		var urls = heartBleedURL;
-		// var currentUrl = tabs[0].url;
 
 		console.log(urls[0]);
 		var currentDomain = new URI(currentUrl).hostname();
@@ -45,7 +47,6 @@ function heartBleed () {
 		for ( var i = 0; i < urls.length; i++ )
 			if (currentDomain.indexOf(urls[i]) != -1)
 				console.log("This website was vulnerable, you might wanna change your password!");
-
 	}
 
 	this.isHeartBleed = function (visitTime, historyURL) {
@@ -53,10 +54,13 @@ function heartBleed () {
 		if (visitTime < new Date(2014, 3, 8)) {
 			console.log("historyURL: " + historyDomain);
 			for( var i = 0; i < heartBleedURL.length; i++) { 
-				if(historyDomain.indexOf(heartBleedURL[i]) != -1)
+				if(historyDomain.indexOf(heartBleedURL[i]) != -1) {
 					console.log("heartbleed!");
+					return true;
+				}
 			}
 		}
+		return false;
 	}
 
 	this.main = function () {
@@ -72,8 +76,20 @@ function safeHistoryMain($scope) {
 	var inst = new safeHistory();
 	var heartB = new heartBleed();
 	$scope.history = [];
+	$scope.ready = false;
+
+	heartB.ctor.then(function() {
+		heartB.parse();
+		$scope.$apply(function() {
+			$scope.ready = true;
+		});
+	})
+
 	$scope.action = function() {
-		inst.getHistory().then(function(data) {
+		if (!$scope.ready) {
+			return false;
+		}
+		inst.getHistory(1000).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
 
@@ -85,6 +101,7 @@ function safeHistoryMain($scope) {
 				}
 
 				if (!hostnames[hostname]) hostnames[hostname] = [];
+				value.printableDate = new Date(value.lastVisitTime).toString();
 				hostnames[hostname].push(value);
 			});
 
@@ -106,9 +123,25 @@ function safeHistoryMain($scope) {
 					});
 				});
 			});
+
+			getGoogleSafeBrowsingRate(sites).then(function(results) {
+				$scope.$apply(function() {
+					$.each(results, function(index, result) {
+						$.each(hostnames[sites[index]], function(key, value) {
+							value.googleRating = result.google_rate;
+							console.log(result);
+						});
+					});
+				});
+			});
+
+			$scope.$apply(function() {
+				$.each($scope.history, function(index, value) {
+					value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
+				})
+			});
 		});
-		heartB.parse();
-		heartB.isHeartBleed(new Date(2014, 2, 8), "https://www.yahoo.com/");
+		
 	};
 }
 
@@ -180,16 +213,38 @@ function getGoogleSafeBrowsingRate(url_list) {
             url: "https://sb-ssl.google.com/safebrowsing/api/lookup?client=firefox&apikey=ABQIAAAAnz8NMTU8sfDxwFqx36NDsRQ3PTNICuN5Fwsgomuke8FxMfY_PA&appver=1.5.2&pver=3.0",
             data: params
         }).done( function (data) {
-            data = data.trim().split("\n")
-
-            result = [];
-            for (var i = 0; i < data.length; i++) {
-                entry = {};
-                entry["site"] = url_list[i];
-                entry["google_rate"] = data[i];
-                result.push(entry);
+            if (data) {
+                data = $.trim(data).split("\n")
+                var result = [];
+                for (var i = 0; i < data.length; i++) {
+                    var entry = {};
+                    entry["site"] = url_list[i];
+                    entry["google_rate"] = data[i];
+                    result.push(entry);
+                }
+            } else {
+                var result = [];
+                for (var i = 0; i < url_list.length; i++) {
+                    var entry = {
+                        "site": url_list[i],
+                        "google_rate": "ok"
+                    }
+                    result.push(entry);
+                }
             }
-            resolve(result);
+          resolve(result);
         });
     })
+}
+
+function getSiteChekk3 (url){
+    return new Promise(function(resolve, reject) {
+        $.post( "http://sitecheck3.sucuri.net/", { doscanbutton: "", scan: url } ,
+            function(data) {
+                var o=$("<div>");
+                o.html(data);
+                resolve(o.find("#sitecheck-results table.scan-findings.table").html());
+            }
+        );
+    });
 }
