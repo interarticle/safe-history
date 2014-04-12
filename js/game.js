@@ -15,9 +15,12 @@ $(document).ready(function () {
 
 function loadData() {
     return new Promise(function(resolve, reject) {
+        var thb = new thumbnailHandler();
         var inst = new safeHistory();
         var heartB = new heartBleed();
-        heartB.ctor.then(function() {
+        Promise.all([
+            heartB.ctor,
+            thb.ctor]).then(function() {
             heartB.parse();
             inst.getHistory(1000).then(function(data) {
                 // Filter data to eliminate duplicate hostnames
