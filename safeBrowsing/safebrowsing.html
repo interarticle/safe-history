@@ -10,7 +10,7 @@
 
 <button type="button" onclick="myFunction()">Try it</button>
 
-<script src="../jquery-1.11.0.min.js"></script>
+<script src="../js/jquery-1.11.0.min.js"></script>
 
 <script>
 function getWOTRate(url_list) {
@@ -26,13 +26,15 @@ function getWOTRate(url_list) {
                 $.each(data, function(key, val) {
                     entry = {};
                     entry["site"] = val["target"];
-                    var rate_sum = 0;
-                    for (var i = 0; i < val["0"].length; i++) {
-                        rate_sum += val["0"][i];
+                    if (val["0"] != null) {
+                        var rate_sum = 0;
+                        for (var i = 0; i < val["0"].length; i++) {
+                            rate_sum += val["0"][i];
+                        }
+                        entry["wot_rate"] = Math.floor(rate_sum / val["0"].length);
+                    } else {
+                        entry["wot_rate"] = "Not available"
                     }
-                    entry["wot_rate"] = Math.floor(rate_sum / val["0"].length);
-                    // entry["wot_high_rate"] = val["0"][0];
-                    // entry["wot_low_rate"] = val["0"][1];
                     result.push(entry);
                 })
                 resolve(result);
@@ -76,7 +78,7 @@ function myFunction()
     //     },
     //     "json"
     // );
-    var url_list = ["google.com", "baidu.com", "qq.com", "mitbbs.com", "tiexue.net", "h.acfun.tv", "whois.cymru.com", "ianfette.org"];
+    var url_list = ["google.com", "qq.com", "mitbbs.com", "h.acfun.tv", "whois.cymru.com", "ianfette.org", "gumblar.cn", "sua-kaan.at"];
     getWOTRate(url_list).then(function(data) {
         // $.each(data, function(key, val) {
             // document.getElementById("wot").innerHTML += key + " " + JSON.stringify(data[key]) + "<br>";
