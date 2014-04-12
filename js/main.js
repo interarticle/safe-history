@@ -71,6 +71,8 @@ function safeHistoryMain($scope) {
 	$scope.history = [];
 	$scope.action = function() {
 		inst.getHistory().then(function(data) {
+			// Filter data to eliminate duplicate hostnames
+			var hostnameFilter = {};
 			$scope.$apply(function() {
 				$scope.history = data;
 			});
