@@ -27,7 +27,7 @@ angular.module("game").config(function($compileProvider, $routeProvider) {
         $scope.sites[$scope.index++].choice = safe;
 
         if($scope.index == 10) {
-            $scope.load_progress = "Loading Extensive analysis";
+            $scope.load_progress = "Loading Extensive Analysis";
             $scope.ready = false;
             tablesPromise.then(function() {
                 $scope.ready = true;
@@ -37,13 +37,13 @@ angular.module("game").config(function($compileProvider, $routeProvider) {
         }
         $('#myRoundabout').roundabout_animateToChild($scope.index);
     }
-    $scope.load_progress = "Calculating risk factors...";
+    $scope.load_progress = "Calculating Risk Factors...";
     loadData().then(function(data) {
         $scope.$apply(function() {
             $scope.sites = data.result;
             globalData = data;
 
-            $scope.load_progress = "Preloading thumbnails...";
+            $scope.load_progress = "Preloading Thumbnails...";
 
             var thumbProm = [];
             $.each(data.result, function(index, value) {
