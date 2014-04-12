@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="game">
 <head>
 <title>Safe History</title>
 <meta charset="utf-8">
@@ -19,6 +19,8 @@
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/game-data.js"></script>
+<script type="text/javascript" src="js/game.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="js/html5.js"></script>
 <style type="text/css">.bg {behavior:url("js/PIE.htc")}</style>
@@ -30,7 +32,7 @@
   }
 </style>
 </head>
-<body id="page1">
+<body id="page1" ng-controller="gameMain">
 <div class="body1">
   <div class="body2">
     <div class="body3">
@@ -42,11 +44,9 @@
           <div class="relative">
             <div id="gallery">
               <ul id="myRoundabout">
-                <li>BC</li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
+                <li ng-repeat="site in sites">
+                  <img src="{{ site.thumbnail ? site.thumbnail : 'images/loading.gif' }}" alt="">
+                </li>
               </ul>
             </div>
           </div>
@@ -77,5 +77,5 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="js/game.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
 </html>
