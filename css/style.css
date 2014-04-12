@@ -103,12 +103,11 @@ p {
 header {
 	height:645px
 }
-#logo {
-	display:block;
-	background:url(../images/log.png) 0 0 no-repeat;
-	width:276px;
-	height:94px;
-	text-indent:-9999px
+.logo {
+	width:120px;
+	height:auto;
+	margin-left: -150px;
+	margin-bottom: -70px;
 }
 
 .roundabout-holder {
@@ -293,52 +292,6 @@ a.aToolTipCloseBtn {
 	top:1px;
 }
 
-.banner {
-	-moz-box-shadow:inset 0px -1px 0px 0px #f9eca0;
-	-webkit-box-shadow:inset 0px -1px 0px 0px #f9eca0;
-	box-shadow:inset 0px -1px 0px 0px #f9eca0;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f0c911), color-stop(1, #f2ab1e) );
-	background:-moz-linear-gradient( center top, #f0c911 5%, #f2ab1e 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0c911', endColorstr='#f2ab1e');
-	background-color:#f0c911;
-	-webkit-border-top-left-radius:0px;
-	-moz-border-radius-topleft:0px;
-	border-top-left-radius:0px;
-	-webkit-border-top-right-radius:20px;
-	-moz-border-radius-topright:20px;
-	border-top-right-radius:20px;
-	-webkit-border-bottom-right-radius:0px;
-	-moz-border-radius-bottomright:0px;
-	border-bottom-right-radius:0px;
-	-webkit-border-bottom-left-radius:20px;
-	-moz-border-radius-bottomleft:20px;
-	border-bottom-left-radius:20px;
-	text-indent:0;
-	border:1px solid #e65f44;
-	display:inline-block;
-	color:#c92200;
-	font-family:Comic Sans MS;
-	font-size:22px;
-	font-weight:bold;
-	font-style:normal;
-	height:65px;
-	line-height:65px;
-	width:186px;
-	text-decoration:none;
-	text-align:center;
-	text-shadow:1px 1px 0px #ded17c;
-	margin-left: -150px;
-}
-.banner:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
-	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
-	background-color:#378de5;
-}.banner:active {
-	position:relative;
-	top:1px;
-}
-
 .title {
 	-moz-box-shadow:inset 0px -1px 0px 0px #f9eca0;
 	-webkit-box-shadow:inset 0px -1px 0px 0px #f9eca0;
@@ -373,7 +326,8 @@ a.aToolTipCloseBtn {
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #ded17c;
-	margin-left: 250px;
+	margin-left: 330px;
+	margin-top: 15px;
 }
 .title:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f2ab1e), color-stop(1, #f0c911) );
