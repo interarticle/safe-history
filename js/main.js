@@ -50,20 +50,17 @@ function heartBleed () {
 	}
 
 	this.isHeartBleed = function (visitTime, historyURL) {
-		return new Promise(function(resolve) {
-			var historyDomain = new URI(historyURL).hostname();
-			if (visitTime < new Date(2014, 3, 8)) {
-				console.log("historyURL: " + historyDomain);
-				for( var i = 0; i < heartBleedURL.length; i++) { 
-					if(historyDomain.indexOf(heartBleedURL[i]) != -1) {
-						console.log("heartbleed!");
-						resolve(0);
-						return;
-					}
+		var historyDomain = new URI(historyURL).hostname();
+		if (visitTime < new Date(2014, 3, 8)) {
+			console.log("historyURL: " + historyDomain);
+			for( var i = 0; i < heartBleedURL.length; i++) { 
+				if(historyDomain.indexOf(heartBleedURL[i]) != -1) {
+					console.log("heartbleed!");
+					return true;
 				}
 			}
-			resolve(-1);
-		})
+		}
+		return false;
 	}
 
 	this.main = function () {
@@ -79,7 +76,19 @@ function safeHistoryMain($scope) {
 	var inst = new safeHistory();
 	var heartB = new heartBleed();
 	$scope.history = [];
+	$scope.ready = false;
+
+	heartB.ctor.then(function() {
+		heartB.parse();
+		$scope.$apply(function() {
+			$scope.ready = true;
+		});
+	})
+
 	$scope.action = function() {
+		if (!$scope.ready) {
+			return false;
+		}
 		inst.getHistory().then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
@@ -124,9 +133,14 @@ function safeHistoryMain($scope) {
 					});
 				});
 			});
+
+			$scope.$apply(function() {
+				$.each($scope.history, function(index, value) {
+					value.heartBleed = heartB.isHeartBleed(new Date(value.lastVisitTime), value.url);
+				})
+			});
 		});
-		heartB.parse();
-		heartB.isHeartBleed(new Date(2014, 2, 8), "https://www.yahoo.com/");
+		
 	};
 }
 
