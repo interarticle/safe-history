@@ -18,6 +18,9 @@ angular.module("game").config(function($compileProvider) {
                     });
                 });
             });
+            // $('.button1').click(function() {
+            //     $('#myRoundabout').roundabout_animateToNextChild();
+            // });
 
             setTimeout(function() {
                 $(document).ready(function () {
