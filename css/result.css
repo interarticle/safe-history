@@ -166,7 +166,7 @@ div.row {
 }
 
 .table>tbody>tr>td.scan-green {padding-left: 30px; background:  url(../images/good.png) center left no-repeat;}
-.table>tbody>tr>td.scan-yellow {padding-left: 30px; background:  url(../images/bad.png) center left no-repeat;}
+.table>tbody>tr>td.scan-yellow {padding-left: 30px; background:  url(../images/warnning.png) center left no-repeat;}
 .table>tbody>tr>td.scan-red {padding-left: 30px; background:  url(../images/bad.png) center left no-repeat;}
 .table>tbody>tr>td.scan-blue {padding-left: 30px; background:  url(../images/bad.png) center left no-repeat;}
 
