@@ -108,3 +108,59 @@ function norton(addr) {
 		});
 	});
 }
+
+function getWOTRate(url_list) {
+    return new Promise(function(resolve) {
+        var params = "";
+        for (var i = 0; i < url_list.length; i++) {
+            params = params + url_list[i] + "/";
+        }
+        $.get(
+            "http://api.mywot.com/0.4/public_link_json2?hosts=" + params + "&key=683b9b246d59621df5d3dd8ae88a69e7104c0bdf",
+            function (data) {
+                result = [];
+                $.each(data, function(key, val) {
+                    entry = {};
+                    entry["site"] = val["target"];
+                    if (val["0"] != null) {
+                        var rate_sum = 0;
+                        for (var i = 0; i < val["0"].length; i++) {
+                            rate_sum += val["0"][i];
+                        }
+                        entry["wot_rate"] = Math.floor(rate_sum / val["0"].length);
+                    } else {
+                        entry["wot_rate"] = "Not available"
+                    }
+                    result.push(entry);
+                })
+                resolve(result);
+            },
+            "json"
+        )
+    })
+}
+
+function getGoogleSafeBrowsingRate(url_list) {
+    return new Promise(function(resolve) {
+        var params = url_list.length;
+        for (var i = 0; i < url_list.length; i++) {
+            params = params + "\n" + url_list[i];
+        }
+        $.ajax({
+            type: "POST",
+            url: "https://sb-ssl.google.com/safebrowsing/api/lookup?client=firefox&apikey=ABQIAAAAnz8NMTU8sfDxwFqx36NDsRQ3PTNICuN5Fwsgomuke8FxMfY_PA&appver=1.5.2&pver=3.0",
+            data: params
+        }).done( function (data) {
+            data = data.trim().split("\n")
+
+            result = [];
+            for (var i = 0; i < data.length; i++) {
+                entry = {};
+                entry["site"] = url_list[i];
+                entry["google_rate"] = data[i];
+                result.push(entry);
+            }
+            resolve(result);
+        });
+    })
+}
