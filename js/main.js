@@ -89,7 +89,7 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
-		inst.getHistory(10).then(function(data) {
+		inst.getHistory(100).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
 
