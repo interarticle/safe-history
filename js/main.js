@@ -40,9 +40,9 @@ function heartBleed () {
 	this.parse = function () {
 		var urls = heartBleedURL;
 
-		console.log(urls[0]);
+		// console.log(urls[0]);
 		var currentDomain = new URI(currentUrl).hostname();
-		console.log(currentDomain);
+		// console.log(currentDomain);
 
 		for ( var i = 0; i < urls.length; i++ )
 			if (currentDomain.indexOf(urls[i]) != -1)
@@ -264,9 +264,6 @@ function getSiteChekk3 (url){
 
 function getAnalyseTable(url_list) {
     return new Promise(function(resolve) {
-
-
-
         var result = [];
         for (var i = 0; i < url_list.length; i++) {
             (function (i) {
@@ -289,6 +286,37 @@ function getAnalyseTable(url_list) {
         resolve(result);
     })
 }
+
+function getAnalyseTable_game(url_list) {
+    return new Promise(function(resolve) {
+        var result = [];
+        var promises = [];
+        for (var i = 0; i < url_list.length; i++) {
+            (function (i) {
+                var entry = {
+                    "site": url_list[i]
+                }
+                var prom = getSiteChekk3(url_list[i]).then(function(data) {
+                    // var table_name = "analyze-table-" + i;
+                    // console.log(table_name);
+                    if (data) {
+                        entry["table_html"] = "<table>" + data + "</table>";
+                        // document.getElementById(table_name).innerHTML = "<table>" + data + "</table>";
+                    } else {
+                        entry["table_html"] = "Analysis not available";
+                        // document.getElementById(table_name).innerHTML = "Analysis not available";
+                    }
+                });
+                promises.push(prom);
+                result.push(entry);
+            })(i);
+        }
+        Promise.all(promises).then(function() {
+            resolve(result);
+        })
+    })
+}
+
 
 function thumbnailHandler() {
 	var webthumbnailTimeout = 10000;
