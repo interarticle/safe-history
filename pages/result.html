@@ -1,171 +1,32 @@
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/result.css">
-    <div class="site-wrapper">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/result.css">
+<div class="site-wrapper">
 
-      <div class="site-wrapper-inner">
+  <div class="site-wrapper-inner">
 
-        <div class="cover-container">
+    <div class="cover-container">
 
-          <div class="inner cover">
-            <h1 class="cover-heading">You got x out of 10 wrong.</h1>
-          </div>
+      <div class="inner cover">
+        <h1 class="cover-heading" ng-if="wrong > 2">You got {{ wrong }} out of 10 wrong.</h1>
+        <h1 class="cover-heading" ng-if="wrong <= 2">You got {{ 10 - wrong }} out of 10 correct.</h1>
+        <h1 class="cover-heading" ng-if="wrong == 0">You got all of them correct. Congratulations!</h1>
+      </div>
 
-          <div class="row">
-            <div class="col-md-4">
-            <a href="detail.html" class="thumbnail">
-              <img data-src="holder.js/400%x180" alt="...">
-            </a>
-            </div>
-            <div class="col-md-8">
-<div id="myTabContent" class="tab-content results">    
-<div class="tab-pane fade in active" id="sitecheck-results">
-  <!--
-<img class="pull-left" width="88" height="88" src="/images/green.png" alt="Clean Website" title="Clean Website" />
-      -->  
-        
-<div class="col-xs-10 col-sm-11">
-<!--
-    <table class="table main-result">
-  <tbody>
-
-      <tr>
-    <td><strong>Website:</strong></td>
-    <td class="blue">jivolunteer.com</td>
-      </tr>
-      
-      <tr>
-    <td><strong>Status:</strong></td>
-    <td class="blue">No Malware Detected by External Scan. <span>Additional Actions Recommended!</span></td>
-      </tr>
-      
-      <tr>
-    <td><strong>Web Trust:</strong></td>
-    <td class="blue">Not Currently Blacklisted <small>(8 Blacklists Checked)</small></td>
-      </tr>
-              
-  </tbody>
-    </table>
-
-</div>
--->
-<div class="col-12 col-sm-12 col-lg-12">                
-<!-- Table -->
-<table class="table scan-findings">
-    <thead>
-  <tr>
-      <th>Scan</th>
-      <th>Result</th>
-      <th>Severity</th>
-      <th>Recommendation</th>
-  </tr>
-    </thead>
-    <tbody>
-
-  <tr>
-      <td class="scan-green">Malware</td>
-      <td>Not Detected</td>
-      <td>Low Risk</td>
-      <td><span class="improve">Improve</span> Add Monitoring &amp; Protection</td>
-  </tr>
-  
-  <tr>
-      <td class="scan-green">Website Blacklisting</td>
-      <td>Not Detected</td>
-      <td>Low Risk</td>
-      <td><span class="improve">Improve</span> Add Monitoring &amp; Protection</td>
-  </tr>
-  
-  <tr>
-      <td class="scan-green">Injected SPAM</td>
-      <td>Not Detected</td>
-      <td>Low Risk</td>
-      <td><span class="improve">Improve</span> Add Monitoring &amp; Protection</td>
-  </tr>
-  
-  <tr>
-      <td class="scan-green">Defacements</td>
-      <td>Not Detected</td>
-      <td>Low Risk</td>
-      <td><span class="improve">Improve</span> Add Monitoring &amp; Protection</td>
-  </tr>
-
-<tr>
-<td class="scan-yellow">Website Firewall</td>
-    <td>None Found</td>
-    <td>Medium Risk</td>
-    <td><span class="protect">Protect</span> Protect With Sucuri Firewall</td>
-</tr>
-
-
-
-<tr>
-    <td class="scan-yellow">Comprehensive Scan</td>
-    <td>Incomplete</td>
-    <td>Medium Risk</td>
-    <td><span class="protect">Protect</span> Scan Server Side With Sucuri</td>
-</tr>
- </tbody>
-</table>
-</div>
- 
-<!--
-              <table>
-                  <thead>
-  <tr>
-      <th>Scan</th>
-      <th>Result</th>
-      <th>Severity</th>
-      <th>Recommendation</th>
-  </tr>
-    </thead>
-    <tbody>
-
-  <tr>
-      <td class="scan-red">Website Blacklisting</td>
-      <td>Detected</td>
-      <td>Critical</td>
-      <td><span class="cleanup">Clean Up</span> Clean Up &amp; Remove Blacklisting</td>
-  </tr>
-
-  <tr>
-      <td class="scan-red">Site Likely Compromised</td>
-      <td>Detected</td>
-      <td>Critical</td>
-      <td><span class="cleanup">Clean Up</span> Clean Up &amp; Remove Blacklisting</td>
-  </tr>
-
-  
-<tr>
-<td class="scan-yellow">Website Firewall</td>
-    <td>None Found</td>
-    <td>Medium Risk</td>
-    <td><span class="protect">Protect</span> Protect With Sucuri Firewall</td>
-</tr>
-
-
-
-<tr>
-    <td class="scan-yellow">Comprehensive Scan</td>
-    <td>Incomplete</td>
-    <td>Medium Risk</td>
-    <td><span class="protect">Protect</span> Scan Server Side With Sucuri</td>
-</tr>
-     </tbody>
-   </table>
- </div>
-          </div>
--->
-
-
+      <div class="row" ng-repeat="site in sites">
+        <div class="col-md-4">
+          <a href="detail.html" class="thumbnail">
+            <img ng-src="{{ site.thumbnail }}" alt="...">
+          </a>
         </div>
-
+        <div class="col-md-8">         
+          <div ng-bind-html="site.table_html"></div>
         </div>
-
       </div>
 
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+  </div>
+
+</div>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
