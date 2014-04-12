@@ -5,7 +5,11 @@
   "description": "History!",
   "version": "0.1",
   "icons": { "128": "images/logo.png" },
-
+  "app": {
+    "launch": {
+       "local_path": "index.html"
+      }
+  },
   "permissions": [
     "tabs",
     "history",
