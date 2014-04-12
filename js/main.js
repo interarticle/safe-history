@@ -75,9 +75,36 @@ function safeHistoryMain($scope) {
 	$scope.action = function() {
 		inst.getHistory().then(function(data) {
 			// Filter data to eliminate duplicate hostnames
-			var hostnameFilter = {};
+			var hostnames = {};
+
+			$.each(data, function(key, value) {
+				var uri = new URI(value.url);
+				var hostname = uri.hostname().toLowerCase();
+				if (uri.protocol() != "http" && uri.protocol() != "https") {
+					return; // Ignore any urls that are not http or https, can't deal with that really.
+				}
+
+				if (!hostnames[hostname]) hostnames[hostname] = [];
+				hostnames[hostname].push(value);
+			});
+
 			$scope.$apply(function() {
-				$scope.history = data;
+				$scope.history = [];
+				$.each(hostnames, function(hostname, values) {
+					Array.prototype.push.apply($scope.history, values);
+				});
+			});
+
+			var sites = Object.keys(hostnames);
+
+			getWOTRate(sites).then(function(results) {
+				$scope.$apply(function() {
+					$.each(results, function(index, result) {
+						$.each(hostnames[sites[index]], function(key, value) {
+							value.wotRating = result.wot_rate;
+						})
+					});
+				});
 			});
 		});
 		heartB.parse();
@@ -120,9 +147,9 @@ function getWOTRate(url_list) {
         $.get(
             "http://api.mywot.com/0.4/public_link_json2?hosts=" + params + "&key=683b9b246d59621df5d3dd8ae88a69e7104c0bdf",
             function (data) {
-                result = [];
+                var result = [];
                 $.each(data, function(key, val) {
-                    entry = {};
+                    var entry = {};
                     entry["site"] = val["target"];
                     if (val["0"] != null) {
                         var rate_sum = 0;
