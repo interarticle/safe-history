@@ -62,9 +62,54 @@
     right: 15px;
     text-overflow: ellipsis;
   }
+
+  body.loading {
+    overflow: hidden;
+  }
+  #load-mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(200, 200, 200, 0.98);
+  }
+  body.loading #load-mask {
+    display: block;
+    z-index: 10000;
+  }
+
+  #load-mask .load-progress {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    margin-top: -40px;
+    width: 100%;
+  }
+
+  #load-mask .load-explanation {
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    width: 100%;
+    text-align: center;
+  }
+
+  #load-mask .load-spin {
+    height: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -40px;
+    margin-top: 40px;
+  }
 </style>
 </head>
-<body id="page1" ng-controller="gameMain">
+<body id="page1" ng-controller="gameMain" class="{{ !ready ? 'loading' : '' }} ">
 <div class="body1">
   <div class="body2">
     <div class="body3">
@@ -114,4 +159,13 @@
   </div>
 </div>
 <script type="text/javascript" src="js/init.js"></script>
+<div id="load-mask">
+  <div class="load-progress">
+    {{ load.progress }}
+  </div>
+  <div class="load-explanation">
+    Diligently crunching numbers for your safety ...
+  </div>
+  <img src="images/loader.gif" alt="" class="load-spin">
+</div>
 </html>
