@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-8">  
           <h2>
-            It's <span ng-if="site.verdict != site.choice">actually</span> <span ng-if="site.verdict == 'good'">safe. </span> <span ng-if="site.verdict == 'bad'">unsafe.</span>
+            <span ng-if="site.verdict == site.choice">Correct.</span><span ng-if="site.verdict != site.choice">Incorrect.</span> It's <span ng-if="site.verdict != site.choice">actually</span> <span ng-if="site.verdict == 'good'">safe. </span> <span ng-if="site.verdict == 'bad'">unsafe.</span>
             <span ng-if="site.verdict == 'bad'">
               <span ng-if="site.heartBleed">
                 <span>The website recently was vulnerable to the Heartbleed OpenSSL bug, so your credentials may have been exposed.</span>
