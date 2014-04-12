@@ -137,7 +137,11 @@
         <section>
           <div class="oliver">
             <ul class="bar">
-              <li class="good"></li>
+                <li ng-repeat="site in sites" class="{{!site.choice ? 'default' : site.choice == site.verdict? 'good' : 'bad'}} default" >
+                  <!-- <li ng-class="{{ list.class }}"></li> -->
+                  <!-- <li class="good"></li> -->
+                </li>
+              <!--
               <li class="bad"></li>
               <li class="default"></li>
               <li class="default"></li>
@@ -147,17 +151,19 @@
               <li class="default"></li>
               <li class="default"></li>
               <li class="default"></li>
+            -->
             </ul>
           </div>
           <!-- <p class="urlclass">URL:sgsgaga</p> -->
-          <button class="button1">SAFE</button>
-          <button class="button2">UNSAFE</button>
+          <button class="button1" ng-click='next("good")'>SAFE</button>
+          <button class="button2" ng-click='next("bad")'>UNSAFE</button>
           <button class="button2">FINISH</button>
         </section>
       </div>
     </div>
   </div>
 </div>
+{{ ready}}
 <script type="text/javascript" src="js/init.js"></script>
 <div id="load-mask">
   <div class="load-progress">

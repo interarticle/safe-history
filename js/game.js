@@ -7,7 +7,17 @@ angular.module("game").config(function($compileProvider) {
 }).controller("gameMain", function ($scope) {
     $scope.sites = [];
     $scope.ready = false;
+    $scope.index = 0;
+    $scope.next = function(safe) {
+        if(!$scope.ready)
+            return;
+        $scope.sites[$scope.index++].choice = safe;
+        $('#myRoundabout').roundabout_animateToNextChild();
+        if($scope.index == 10) {
+                        
+        }
 
+    }
     loadData().then(function(data) {
         $scope.$apply(function() {
             $scope.sites = data.result;
@@ -19,10 +29,7 @@ angular.module("game").config(function($compileProvider) {
                     });
                 });
             });
-            // $('.button1').click(function() {
-            //     $('#myRoundabout').roundabout_animateToNextChild();
-            // });
-
+            $scope.ready = true;
             setTimeout(function() {
                 $(document).ready(function () {
                     $('#myRoundabout').roundabout({
