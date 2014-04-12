@@ -198,16 +198,26 @@ function getGoogleSafeBrowsingRate(url_list) {
             url: "https://sb-ssl.google.com/safebrowsing/api/lookup?client=firefox&apikey=ABQIAAAAnz8NMTU8sfDxwFqx36NDsRQ3PTNICuN5Fwsgomuke8FxMfY_PA&appver=1.5.2&pver=3.0",
             data: params
         }).done( function (data) {
-            data = $.trim(data).split("\n")
-
-            var result = [];
-            for (var i = 0; i < data.length; i++) {
-                var entry = {};
-                entry["site"] = url_list[i];
-                entry["google_rate"] = data[i];
-                result.push(entry);
+            if (data) {
+                data = $.trim(data).split("\n")
+                var result = [];
+                for (var i = 0; i < data.length; i++) {
+                    var entry = {};
+                    entry["site"] = url_list[i];
+                    entry["google_rate"] = data[i];
+                    result.push(entry);
+                }
+            } else {
+                var result = [];
+                for (var i = 0; i < url_list.length; i++) {
+                    var entry = {
+                        "site": url_list[i],
+                        "google_rate": "ok"
+                    }
+                    result.push(entry);
+                }
             }
-            resolve(result);
+          resolve(result);
         });
     })
 }
