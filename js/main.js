@@ -22,6 +22,13 @@ function safeHistory() {
 
 function heartBleed () {
 	var currentUrl;
+	var heartBleedURL;
+
+	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/heartbleed.txt", function(heartBleedURL) {
+		// console.log(data);
+		// parse(heartBleedURL);
+	})	
+
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
 	    currentUrl = tabs[0].url;
 	});
@@ -40,12 +47,22 @@ function heartBleed () {
 
 	}
 
-	this.main = function () {
-		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/heartbleed.txt", function(data) {
-			// console.log(data);
-			parse(data);
-		})
-	}
+	// var isHeartBleed = function (visitTime, historyURL) {
+	// 	if (visitTime < new Date(2014, 3, 8)) {
+	// 		var historyDomain = historyURL.split('/')[2];
+	// 		for( var i = 0; i < urls.length; i++) {
+	// 			if(historyDomain.indexOf())
+	// 		}
+	// 	}
+	// }
+
+	// this.main = function () {
+		// $.get("https://raw.githubusercontent.com/interarticle/safe-history/master/heartbleed.txt", function(data) {
+		// 	// console.log(data);
+		// 	parse(data);
+		// 	isHeartBleed(data);
+		// })
+	// }
 }
 
 (function($, undefined) {
