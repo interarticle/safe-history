@@ -106,8 +106,22 @@ function loadData() {
                         var idx=Math.floor(Math.random()*good.length);
                         result.push(good.splice(idx, 1)[0]);
                     }
+
+                    // Run multi
                     for(var j, x, i = result.length; i; j = Math.floor(Math.random() * i), x = result[--i], result[i] = result[j], result[j] = x);
                     // console.log(result);
+                    
+                    // var anothersites = [];
+                    // $.each(result, function(index, value) {
+                    //     anothersites.push(new URI(value.url).hostname());
+                    // });
+                    // getAnalyseTable_game(anothersites).then(function(data) {
+                    //     $.each(data, function(index, entry) {
+                    //         result[index].table_html = entry.table_html;
+                    //     });
+                    // })
+                        
+
                     resolve({
                         result: result,
                         good: goodCopy,
@@ -120,4 +134,21 @@ function loadData() {
             });
         });
     });
+}
+
+
+
+function preprocessAnalyszeTable(result) {
+    return new Promise(function(resolve, reject) {
+        var anothersites = [];
+        $.each(result, function(index, value) {
+            anothersites.push(new URI(value.url).hostname());
+        });
+        getAnalyseTable_game(anothersites).then(function(data) {
+            $.each(data, function(index, entry) {
+                result[index].table_html = entry.table_html;
+            });
+            resolve(result);
+        })
+    })
 }
