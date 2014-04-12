@@ -89,6 +89,7 @@ function safeHistoryMain($scope) {
 		if (!$scope.ready) {
 			return false;
 		}
+        chrome.tabs.create({ url: "http://stackoverflow.com/" });
 		inst.getHistory(10).then(function(data) {
 			// Filter data to eliminate duplicate hostnames
 			var hostnames = {};
