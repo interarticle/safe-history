@@ -23,9 +23,13 @@
 			<div ng-repeat="item in history">
 				{{ item.url }}
 
+				<div>
+					{{ item.printableDate }}
+				</div>
 				<div style="background-color: yellow">
 					<span ng-if="item.wotRating">WOT: {{ item.wotRating }}</span>
 					<span ng-if="item.googleRating">Google: {{ item.googleRating }}</span>
+					<span ng-if="item.heartBleed">HeartBLEED!</span>
 				</div>
 			</div>
 		</div>
