@@ -1,5 +1,5 @@
 a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, body, center, canvas, caption, cite, code, command, datalist, dd, del, details, dfn, dl, div, dt, em, embed, fieldset, figcaption, figure, font, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, keygen, label, legend, li, meter, nav, object, ol, output, p, pre, progress, q, s, samp, section, small, span, source, strike, strong, sub, sup, table, tbody, tfoot, thead, th, tr, tdvideo, tt, u, ul, var {
-	background:transparent;
+	background:#333;
 	border:0 none;
 	font-size:100%;
 	margin:0;
@@ -27,4 +27,47 @@ embed {
 }
 * {
 	border:none
+}
+
+ul.bar {
+	list-style: none;
+	padding: 20px 0 0 217px;
+	margin: 0px;
+	float: left;
+}
+
+section {
+	margin-top: -75px;
+}
+
+ul.bar li {
+	margin-bottom: 20px;
+	float: left;
+	margin-right: 22px;
+	background: url(../images/default.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	text-indent: -1000em;
+	overflow: hidden;
+	color: #000000;
+	font-size: 16px;
+	text-align: center;
+	/* padding-top: 2px; */
+	font-weight: bold;
+}
+
+.roundabout-moveable-item {
+	padding-bottom: 0px; !important
+}
+
+ul.bar li.good {
+	background: url(../images/good.png) no-repeat;
+}
+
+ul.bar li.bad {
+	background: url(../images/bad.png) no-repeat;
+}
+
+div.oliver {
+	/*margin: 20px;*/
 }
