@@ -6,7 +6,7 @@
   "version": "0.1",
 
   "permissions": [
-    
+    "tabs"
   ],
   "browser_action": {
     "default_icon": "logo.png",
