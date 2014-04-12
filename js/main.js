@@ -101,6 +101,7 @@ function safeHistoryMain($scope) {
 				}
 
 				if (!hostnames[hostname]) hostnames[hostname] = [];
+				value.printableDate = new Date(value.lastVisitTime).toString();
 				hostnames[hostname].push(value);
 			});
 
@@ -245,5 +246,5 @@ function getSiteChekk3 (url){
                 resolve(o.find("#sitecheck-results table.scan-findings.table").html());
             }
         );
-    }
-} 
+    });
+}
