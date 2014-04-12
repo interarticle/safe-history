@@ -32,21 +32,35 @@
   }
   #myRoundabout li .title-mask {
     position: absolute;
-    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.85);
+    height: 110px;
   }
 
   #myRoundabout li .title-mask .url {
     font-size: 2em;
     line-height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    bottom: 25px;
+    left: 15px;
+    right: 15px;
   }
   #myRoundabout li .title-mask .page-title {
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
     line-height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    bottom: 60px;
+    left: 15px;
+    right: 15px;
+    text-overflow: ellipsis;
   }
 </style>
 </head>

@@ -321,8 +321,8 @@ function getAnalyseTable_game(url_list) {
 function thumbnailHandler() {
 	var webthumbnailTimeout = 10000;
 	var webthumbnailPollFrequency = 1000;
-	var webthumbnailImage = "http://api.webthumbnail.org/?width=250&height=212&screen=1024&url=%s&%d";
-	var webthumbnailPoll = "http://api.webthumbnail.org?width=250&height=212&screen=1024&url=%s&action=get-status&time=%d";
+	var webthumbnailImage = "http://api.webthumbnail.org/?width=640&height=424&screen=1024&url=%s&%d";
+	var webthumbnailPoll = "http://api.webthumbnail.org?width=640&height=424&screen=1024&url=%s&action=get-status&time=%d";
 	this.ctor = Promise.cast(); // For now, just use empty promise because no special handling is needed.
 	var getWebThumbnail = this.getWebThumbnail = function (url) {
 		// Using webthumbnail.org
