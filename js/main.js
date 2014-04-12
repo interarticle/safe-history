@@ -300,7 +300,7 @@ function getAnalyseTable_game(url_list) {
                     // var table_name = "analyze-table-" + i;
                     // console.log(table_name);
                     if (data) {
-                        entry["table_html"] = "<table>" + data + "</table>";
+                        entry["table_html"] = "<table class=\"table scan-findings\">" + data + "</table>";
                         // document.getElementById(table_name).innerHTML = "<table>" + data + "</table>";
                     } else {
                         entry["table_html"] = "Analysis not available";
@@ -321,8 +321,8 @@ function getAnalyseTable_game(url_list) {
 function thumbnailHandler() {
 	var webthumbnailTimeout = 10000;
 	var webthumbnailPollFrequency = 1000;
-	var webthumbnailImage = "http://api.webthumbnail.org/?width=250&height=212&screen=1024&url=%s&%d";
-	var webthumbnailPoll = "http://api.webthumbnail.org?width=250&height=212&screen=1024&url=%s&action=get-status&time=%d";
+	var webthumbnailImage = "http://api.webthumbnail.org/?width=640&height=424&screen=1024&url=%s&%d";
+	var webthumbnailPoll = "http://api.webthumbnail.org?width=640&height=424&screen=1024&url=%s&action=get-status&time=%d";
 	this.ctor = Promise.cast(); // For now, just use empty promise because no special handling is needed.
 	var getWebThumbnail = this.getWebThumbnail = function (url) {
 		// Using webthumbnail.org

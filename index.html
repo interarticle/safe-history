@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="game">
 <head>
 <title>Safe History</title>
 <meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
-<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 <script type="text/javascript" src="js/jquery-1.11.0.min.js" ></script>
 <script type="text/javascript" src="js/sprintf.min.js" ></script>
 <script type="text/javascript" src="js/cufon-yui.js"></script>
@@ -19,34 +19,70 @@
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/game-data.js"></script>
+<script type="text/javascript" src="js/game.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="js/html5.js"></script>
 <style type="text/css">.bg {behavior:url("js/PIE.htc")}</style>
 <![endif]-->
 <style>
   #myRoundabout li {
-    background-color: #eee;
+    background-color: #333;
     border:10px solid white;
+  }
+  #myRoundabout li .title-mask {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.85);
+    height: 110px;
+  }
+
+  #myRoundabout li .title-mask .url {
+    font-size: 2em;
+    line-height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    bottom: 25px;
+    left: 15px;
+    right: 15px;
+  }
+  #myRoundabout li .title-mask .page-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    bottom: 60px;
+    left: 15px;
+    right: 15px;
+    text-overflow: ellipsis;
   }
 </style>
 </head>
-<body id="page1">
+<body id="page1" ng-controller="gameMain">
 <div class="body1">
   <div class="body2">
     <div class="body3">
       <div class="main">
         <!-- header -->
         <header>
-          <button class="banner">Safe History</button>
+          <img class="logo" src="images/logo.png">
             <button class="title">It this website safe???</button> 
           <div class="relative">
             <div id="gallery">
               <ul id="myRoundabout">
-                <li>BC</li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
-                <li><img src="images/shanghai2.jpg" alt=""></li>
+                <li ng-repeat="site in sites">
+                  <img ng-src="{{ site.thumbnail ? site.thumbnail : 'images/loading.gif' }}" alt="">
+                  <div class="title-mask">
+                    <div class="url">{{ site.url }}</div>
+                    <div class="page-title">{{ site.title }}</div>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -77,5 +113,5 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="js/game.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
 </html>

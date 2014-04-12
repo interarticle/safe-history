@@ -3,8 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hi</title>
-
-	<script type="text/javascript" src="../js/sprintf.min.js"></script>
 	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="../js/URI.min.js"></script>
 	<script type="text/javascript" src="../js/main.js"></script>
@@ -32,7 +30,7 @@
 					<span ng-if="item.wotRating">WOT: {{ item.wotRating }}</span>
 					<span ng-if="item.googleRating">Google: {{ item.googleRating }}</span>
 					<span ng-if="item.heartBleed">HeartBLEED!</span>
-					<div ng-if="item.idx" id="analyze-table-{{ item.idx }}"></div>
+					<div ng-if="item.idx !== null" id="analyze-table-{{ item.idx }}"></div>
 				</div>
 			</div>
 			<div id="table"></div>
