@@ -26,8 +26,6 @@ function heartBleed () {
 
 	$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
 		heartBleedURL = data.split('\n');
-		// console.log(data);
-		// parse(heartBleedURL);
 	})	
 
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
@@ -36,7 +34,6 @@ function heartBleed () {
 
 	this.parse = function () {
 		var urls = heartBleedURL;
-		// var currentUrl = tabs[0].url;
 
 		console.log(urls[0]);
 		var currentDomain = new URI(currentUrl).hostname();
@@ -49,14 +46,21 @@ function heartBleed () {
 	}
 
 	this.isHeartBleed = function (visitTime, historyURL) {
-		var historyDomain = new URI(historyURL).hostname();
-		if (visitTime < new Date(2014, 3, 8)) {
-			console.log("historyURL: " + historyDomain);
-			for( var i = 0; i < heartBleedURL.length; i++) { 
-				if(historyDomain.indexOf(heartBleedURL[i]) != -1)
-					console.log("heartbleed!");
+		return new Promise(function(resolve) {
+			var result;
+			var historyDomain = new URI(historyURL).hostname();
+			if (visitTime < new Date(2014, 3, 8)) {
+				console.log("historyURL: " + historyDomain);
+				for( var i = 0; i < heartBleedURL.length; i++) { 
+					if(historyDomain.indexOf(heartBleedURL[i]) != -1) {
+						console.log("heartbleed!");
+						resolve(0);
+						return;
+					}
+				}
 			}
-		}
+			resolve(-1);
+		})
 	}
 
 	this.main = function () {
