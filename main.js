@@ -1,5 +1,10 @@
+"use strict";
+
 function safeHistory() {
 	this.getHistory = function() {
+		chrome.history.search({"text": ""}, function(res) {
+			console.log(res);
+		});
 	}
 }
 
@@ -7,7 +12,10 @@ function safeHistory() {
 	var inst = new safeHistory();
 	$(function() {
 		$("#actionbtn").click(function() {
-			console.log(inst.getHistory());
+			inst.getHistory();
+			$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/README.md", function(data) {
+				console.log(data);
+			})
 		});
 	});
 })(jQuery);

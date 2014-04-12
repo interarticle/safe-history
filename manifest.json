@@ -6,7 +6,8 @@
   "version": "0.1",
 
   "permissions": [
-    
+    "history",
+    "https://raw.githubusercontent.com/*"
   ],
   "browser_action": {
     "default_icon": "logo.png",
