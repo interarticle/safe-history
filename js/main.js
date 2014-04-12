@@ -41,28 +41,26 @@ function heartBleed () {
 	}
 
 	this.main = function () {
-		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/heartbleed.txt", function(data) {
+		$.get("https://raw.githubusercontent.com/interarticle/safe-history/master/data/heartbleed.txt", function(data) {
 			// console.log(data);
 			parse(data);
 		})
 	}
 }
 
-(function($, undefined) {
+function safeHistoryMain($scope) {
 	var inst = new safeHistory();
 	var heartB = new heartBleed();
-	$(function() {
-		$("#actionbtn").click(function() {
-			inst.getHistory().then(function(data) {
-				console.log(data);
-				for (var i = 0; i < data.length; i++) {
-					$("#data").append($("<div>").text(data[i]['url']));
-				}
+	$scope.history = [];
+	$scope.action = function() {
+		inst.getHistory().then(function(data) {
+			$scope.$apply(function() {
+				$scope.history = data;
 			});
-			heartB.main();
 		});
-	});
-})(jQuery);
+		heartB.main();
+	};
+}
 
 
 function avg(url) {

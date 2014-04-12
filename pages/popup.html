@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
 	<meta charset="UTF-8">
 	<title>Hi</title>
 	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="../js/main.js"></script>
+	<script type="text/javascript" src="../js/angular.min.js"></script>
 
 	<style>
 		body {
@@ -14,9 +15,15 @@
 	</style>
 </head>
 <body>
-	Hello world
-	<p id="warning"></p>
-	<div id="data"></div>
-	<button id="actionbtn">Hi</button>
+	<div id="main" ng-controller="safeHistoryMain">
+		Hello world
+		<p id="warning"></p>
+		<div id="data">
+			<div ng-repeat="item in history">
+				{{ item.url }}
+			</div>
+		</div>
+		<button id="actionbtn" ng-click="action()">Hi</button>
+	</div>
 </body>
 </html>
