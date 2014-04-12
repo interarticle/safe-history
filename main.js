@@ -24,13 +24,18 @@ function safeHistory() {
 	var inst = new safeHistory();
 	$(function() {
 		$("#actionbtn").click(function() {
-			inst.getHistory().then(function(data) {console.log(data)});
+			inst.getHistory().then(function(data) {
+				for (var i = 0; i < data.length; i++) {
+					$("#data").append($("div").text(data['url']));
+				}
+			});
 		});
 	});
 })(jQuery);
 
 chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
     console.log(tabs[0].url);
+
    $('#warning').text(tabs[0].url);
 
 });
