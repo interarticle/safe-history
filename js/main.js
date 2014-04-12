@@ -193,3 +193,15 @@ function getGoogleSafeBrowsingRate(url_list) {
         });
     })
 }
+
+function getSiteChekk3 (url){
+    return new Promise(function(resolve, reject) {
+        $.post( "http://sitecheck3.sucuri.net/", { doscanbutton: "", scan: url } ,
+            function(data) {
+                var o=$("<div>");
+                o.html(data);
+                resolve(o.find("#sitecheck-results table.scan-findings.table").html());
+            }
+        );
+    }
+}
