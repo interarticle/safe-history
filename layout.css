@@ -1,0 +1,25 @@
+.col1, .col2, .col3, .cols {
+	float:left
+}
+.col1 {
+	width:290px
+}
+.col2 {
+	width:240px
+}
+.col3 {
+	width:252px
+}
+/* index.html */
+#page1 .buttons .col1 .button {
+	margin-left:10px
+}
+#page1 .buttons .col2 .button {
+	margin-left:24px
+}
+#page1 .buttons .col3 .button {
+	margin-left:76px
+}
+#page1 #content2 .col1 {
+	width:597px
+}
