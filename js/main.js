@@ -106,6 +106,17 @@ function safeHistoryMain($scope) {
 					});
 				});
 			});
+
+			getGoogleSafeBrowsingRate(sites).then(function(results) {
+				$scope.$apply(function() {
+					$.each(results, function(index, result) {
+						$.each(hostnames[sites[index]], function(key, value) {
+							value.googleRating = result.google_rate;
+							console.log(result);
+						});
+					});
+				});
+			});
 		});
 		heartB.parse();
 		heartB.isHeartBleed(new Date(2014, 2, 8), "https://www.yahoo.com/");
@@ -180,11 +191,11 @@ function getGoogleSafeBrowsingRate(url_list) {
             url: "https://sb-ssl.google.com/safebrowsing/api/lookup?client=firefox&apikey=ABQIAAAAnz8NMTU8sfDxwFqx36NDsRQ3PTNICuN5Fwsgomuke8FxMfY_PA&appver=1.5.2&pver=3.0",
             data: params
         }).done( function (data) {
-            data = data.trim().split("\n")
+            data = $.trim(data).split("\n")
 
-            result = [];
+            var result = [];
             for (var i = 0; i < data.length; i++) {
-                entry = {};
+                var entry = {};
                 entry["site"] = url_list[i];
                 entry["google_rate"] = data[i];
                 result.push(entry);
